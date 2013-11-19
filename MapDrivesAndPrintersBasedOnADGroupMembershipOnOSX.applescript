@@ -35,9 +35,13 @@ end if
 ------------------------------
 --- Drives
 ------------------------------
---Home Folder -- Maps the drive specified in the profile field for the AD User 
-try mount volume "smb:" & ADHome on error 
-    -- continue if user has no profile path set 
+--Home Folder -- Maps the drive specified in the profile field for the AD User continue if user has no profile path set 
+try 
+  
+  mount volume "smb:" & ADHome 
+  
+  on error 
+  
 end try 
 
 -- Checks Group Membership for ADGroups contains user & if they -- are in the correct groups, mount shares. ---------
