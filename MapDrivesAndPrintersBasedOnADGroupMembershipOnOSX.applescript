@@ -27,7 +27,7 @@ set ADGroups to do shell script "dscl " & quoted form of nodeName & " -read /Use
 -- Get the Users AD Home Folder
 set ADHome to do shell script "dscl " & quoted form of nodeName & " -read /Users/" & loggedInUser & "| grep SMBHome: | cut -c 10- | sed 's/\\\\/\\//g' "
 
--- Checks to see if account is an AD Account, if it's not exits
+-- Checks to see if account is an AD Account, if its not exit
 if accountType is less than 1000 then
  tell me to quit
 end if
