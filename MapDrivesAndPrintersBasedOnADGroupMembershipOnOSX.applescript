@@ -1,9 +1,27 @@
+----------------------------------------------------------------------------------------------------
+--
+-- More information: http://macmule.com/2011/09/08/how-to-map-drives-printers-based-on-ad-group-membership-on-osx/
+--
+-- GitRepo: https://github.com/macmule/MapDrivesAndPrintersBasedOnADGroupMembershipOnOSX
+--
+-- License: http://macmule.com/license/
+--
+----------------------------------------------------------------------------------------------------
+
 -------------------------------
 --- User Information 
 -------------------------------
+
+-- Get the logged in users username
 set loggedInUser to do shell script "whoami" set accountType to do shell script "dscl . -read /Users/" & loggedInUser & " | grep UniqueID | cut -c 11-" 
+
+-- Get the nodeName from the Users account
 set nodeName to do shell script "dscl . -read /Users/" & loggedInUser & " | awk '/^OriginalNodeName:/,/^Password:/' | head -2 | tail -1 | cut -c 2-" 
+
+-- Get the Users group membership from AD
 set ADGroups to do shell script "dscl " & quoted form of nodeName & " -read /Users/" & loggedInUser & " | awk '/^dsAttrTypeNative:memberOf:/,/^dsAttrTypeNative:msExchHomeServerName:/'" 
+
+-- Get the Users AD Home Folder
 set ADHome to do shell script "dscl " & quoted form of nodeName & " -read /Users/" & loggedInUser & "| grep SMBHome: | cut -c 10- | sed 's/\\\\/\\//g' "
 
 -- Checks to see if account is an AD Account, if it's not exits
