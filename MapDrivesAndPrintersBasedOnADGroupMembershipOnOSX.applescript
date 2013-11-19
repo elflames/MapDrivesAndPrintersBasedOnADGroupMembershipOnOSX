@@ -15,6 +15,9 @@
 -- Get the logged in users username
 set loggedInUser to do shell script "whoami" set accountType to do shell script "dscl . -read /Users/" & loggedInUser & " | grep UniqueID | cut -c 11-" 
 
+-- Get the Users account UniqueID
+set accountType to do shell script "dscl . -read /Users/" & loggedInUser & " | grep UniqueID | cut -c 11-"
+
 -- Get the nodeName from the Users account
 set nodeName to do shell script "dscl . -read /Users/" & loggedInUser & " | awk '/^OriginalNodeName:/,/^Password:/' | head -2 | tail -1 | cut -c 2-" 
 
